@@ -1,0 +1,25 @@
+
+---
+
+## 📄 `.gitignore`
+
+```gitignore
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env
+
+# SQLite database
+*.sqlite3
+*.db
+
+# PyCharm project files
+.idea/
+
+# macOS/Linux/Windows system files
+.DS_Store
+Thumbs.db

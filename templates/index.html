@@ -1,0 +1,73 @@
+{% include 'header.html' %}
+{% include 'about.html' %}
+{% include 'cart.html' %}
+{% include 'checkout.html' %}
+
+
+<div class="px-4 pt-5 my-5 text-center">
+    <h1 class="display-4 fw-bold text-body-emphasis">Welcome to your favorite place!</h1>
+    <div class="col-lg-6 mx-auto pb-3">
+        <p class="lead mb-4 fs-4"> Pick the product/s you like to buy and add them to your shopping cart. Check in you shopping cart
+            if everything is correct and to the checkout page to complete your order. Enjoy! 👨🏼‍🍳😋</p>
+    </div>
+    <div class="container my-5">
+
+        <!--  Flashes -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="container justify">
+            <div class="alert alert-{{ category }} alert-dismissible fade show mx-5 px-2 my-5" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+
+            {% for id, product in products.items() %}
+            <div class="col">
+                <div class="card mb-4 rounded-3 shadow-lg" style="border: 2px solid #f0c0c0;">
+                    <div class="py-3" style="background-color: #f0c0c0;">
+                        <h4 class="my-0 fw-normal">{{ product.name }}</h4>
+                    </div>
+                    <div class="card-body">
+                        {% if product.disc %}
+                        <div class="d-flex justify-content-center align-items-center gap-2 mb-2">
+                            <span class="text-muted" style="text-decoration: line-through; font-size: 1.1rem;">
+                                ${{ product.price }}
+                            </span>
+                            <h2 class="card-title pricing-card-title mb-0">
+                                ${{ (product.price * (1-product.disc_amount)) | round(3) }}
+                                <small class="text-body-secondary fw-light fs-5">/unit</small>
+                            </h2>
+                        </div>
+                        {% else %}
+                        <h2 class="card-title pricing-card-title">
+                            ${{ product.price }}
+                            <small class="text-body-secondary fw-light fs-4">/unit</small>
+                        </h2>
+                        {% endif %}
+
+                        <div class="container">
+                            <img src="{{ product.img_url }}" class="img-fluid"
+                                 style="max-height: 150px; object-fit: contain;">
+                        </div>
+                        <form action="{{ url_for('add_to_cart', product_id=id) }}" method="post">
+                            <input class="my-3 text-center" type="number" name="quantity" value="1" min="1" style="width: 60px;">
+                            <button type="submit" class="w-100 btn btn-lg" style="background-color: #f0c0c0;">Add to cart</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+</div>
+
+{% include 'footer.html' %}
