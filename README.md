@@ -47,4 +47,3 @@ It simulates an online bakery shop where users can browse products, add them to 
    ```
 
 Enjoy building it!
-https://bakery-at-home.onrender.com
